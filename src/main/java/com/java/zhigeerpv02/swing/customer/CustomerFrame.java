@@ -126,7 +126,7 @@ public class CustomerFrame extends JFrame {
         add.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new AddAndUpdateFrame(customerFrame, 1);
+                new CustomerAddAndUpdateFrame(customerFrame, 1);
             }
         });
     }
@@ -152,7 +152,7 @@ public class CustomerFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (getCurrentCustomer() != null) {
-                    new AddAndUpdateFrame(customerFrame, 2, getCurrentCustomer());
+                    new CustomerAddAndUpdateFrame(customerFrame, 2, getCurrentCustomer());
                 }
             }
         });

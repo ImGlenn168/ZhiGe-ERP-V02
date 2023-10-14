@@ -3,12 +3,13 @@ package com.java.zhigeerpv02.swing.customer;
 import com.java.zhigeerpv02.entity.Customer;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import org.apache.commons.lang3.StringUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AddAndUpdateFrame extends JFrame {
+public class CustomerAddAndUpdateFrame extends JFrame {
     private CustomerRequest customerRequest = CustomerRequest.getCustomerRequest();
     private CustomerFrame customerFrame;
     private String title;
@@ -22,7 +23,7 @@ public class AddAndUpdateFrame extends JFrame {
     JLabel cidLabel, nameLabel, telLabel, weChatLabel, noteLabel;
 
     // 将主面板传入，方便数据传递。 type用于判断是添加数据还是修改数据
-    public AddAndUpdateFrame(final CustomerFrame customerFrame, int type) throws HeadlessException {
+    public CustomerAddAndUpdateFrame(final CustomerFrame customerFrame, int type) throws HeadlessException {
         this.type = type;
         title = "添加客户";
         confirm = "添加";
@@ -38,7 +39,7 @@ public class AddAndUpdateFrame extends JFrame {
     }
 
     // 构造方法重载，若传入一个student对象，则表示需要修改此对象。
-    public AddAndUpdateFrame(final CustomerFrame customerFrame, int type, Customer customer) throws HeadlessException {
+    public CustomerAddAndUpdateFrame(final CustomerFrame customerFrame, int type, Customer customer) throws HeadlessException {
         this.customer = customer;
         this.type = type;
         title = "修改学生";
@@ -118,8 +119,8 @@ public class AddAndUpdateFrame extends JFrame {
     private void addCustomer() {
         if (!validation()) return;
         try {
-            customer = new Customer(cid.getText().trim(),cname.getText().trim(), tel.getText().trim(),
-                    weChat.getText().trim(),note.getText().trim());
+            customer = new Customer(cid.getText().trim(), cname.getText().trim(), tel.getText().trim(),
+                    weChat.getText().trim(), note.getText().trim());
             System.out.println(customer);
             customerRequest.addCustomer(customer);
 
@@ -133,7 +134,7 @@ public class AddAndUpdateFrame extends JFrame {
     private void updateStudent() {
         if (!validation()) return;
         customer = new Customer(cid.getText().trim(), cname.getText().trim(),
-                tel.getText().trim(), weChat.getText().trim(),note.getText().trim());
+                tel.getText().trim(), weChat.getText().trim(), note.getText().trim());
         customerRequest.updateCustomer(customer);
         customerFrame.showData(customerRequest.getList());
         dispose();
@@ -177,7 +178,7 @@ public class AddAndUpdateFrame extends JFrame {
     // 用于验证数据是否为空
     private boolean validation() {
         boolean flag = true;
-        String cid= this.cid.getText().trim();
+        String cid = this.cid.getText().trim();
         String name = this.cname.getText().trim();
         String tel = this.tel.getText().trim();
         String weChat = this.weChat.getText().trim();
@@ -190,6 +191,11 @@ public class AddAndUpdateFrame extends JFrame {
         if (!cid.matches("^[0-9]*$")) {
             flag = false;
             new MsgFrame("编号必须为数字！");
+            return flag;
+        }
+        if (tel.length() > 11) {
+            flag = false;
+            new MsgFrame("电话长度不能大于11！");
             return flag;
         }
         return flag;
