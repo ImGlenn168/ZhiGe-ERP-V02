@@ -1,5 +1,6 @@
 package com.java.zhigeerpv02.swing.util;
 
+import com.java.zhigeerpv02.swing.bill.BillFrame;
 import com.java.zhigeerpv02.swing.customer.CustomerFrame;
 
 import javax.swing.*;
@@ -10,6 +11,8 @@ import java.awt.event.MouseEvent;
 public class OptionFrame extends JFrame {
 
     private CustomerFrame customerFrame;
+
+    private BillFrame billFrame;
 
     public static OptionFrame optionFrame;
 
@@ -42,6 +45,7 @@ public class OptionFrame extends JFrame {
         billButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                billFrame = new BillFrame();
                 dispose();
             }
         });

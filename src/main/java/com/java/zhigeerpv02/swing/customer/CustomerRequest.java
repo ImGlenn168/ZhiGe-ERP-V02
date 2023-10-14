@@ -64,7 +64,6 @@ public class CustomerRequest {
     public void updateCustomer(Customer customer) {
         ResponseEntity<Integer> result = RestTemplateUtil.getRestTemplate().postForEntity(RestTemplateUtil.URL + "/customer/update", customer, Integer.class);
         Integer i = result.getBody();
-
         if (i > 0) {
             new MsgFrame("客户修改成功！");
         } else {

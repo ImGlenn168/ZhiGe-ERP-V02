@@ -3,7 +3,7 @@ package com.java.zhigeerpv02.swing.customer;
 import com.alibaba.excel.util.StringUtils;
 import com.java.zhigeerpv02.entity.Customer;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
-import com.java.zhigeerpv02.swing.util.MyTableData;
+import com.java.zhigeerpv02.swing.util.CustomerTableData;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
 
 import javax.swing.*;
@@ -49,8 +49,8 @@ public class CustomerFrame extends JFrame {
         jScrollPane = new JScrollPane(jTable);
         jScrollPane.setBounds(2, 2, 790, 300);
 
-        goBackOption = new JButton("返回选择界面");
-        goBackOption.setBounds(50, 320, 120, 25);
+        goBackOption = new JButton("返回");
+        goBackOption.setBounds(50, 320, 80, 25);
 
         add = new JButton("添加");
         add.setBounds(50, 410, 80, 25);
@@ -84,7 +84,7 @@ public class CustomerFrame extends JFrame {
     // 不同的集合展示不同的数据
     public void showData(List<Customer> data) {
         // 设置表格数据模型
-        jTable.setModel(MyTableData.getModel(data));
+        jTable.setModel(CustomerTableData.getModel(data));
         // 表格数据变化时，修改数据
         jTable.getModel().addTableModelListener(e -> {
             customerRequest.updateCustomer(getCurrentCustomer());

@@ -2,7 +2,6 @@ package com.java.zhigeerpv02.swing.bill;
 
 import com.alibaba.fastjson.JSON;
 import com.java.zhigeerpv02.entity.Bill;
-import com.java.zhigeerpv02.entity.Customer;
 import com.java.zhigeerpv02.utils.RestTemplateUtil;
 
 import java.util.ArrayList;
@@ -18,14 +17,15 @@ public class BillRequest {
         return billRequest;
     }
 
-    public List<Customer> getList() {
-        List customerList = RestTemplateUtil.getRestTemplate().getForObject(RestTemplateUtil.URL + "/customer/findAll", List.class);
-        String strList = JSON.toJSONString(customerList, Customer.class.getModifiers());
-        List<Customer> customers = JSON.parseArray(strList, Customer.class);
-        return customers;
+    public List<Bill> getList() {
+        List customerList = RestTemplateUtil.getRestTemplate().getForObject(RestTemplateUtil.URL + "/bill/findAll", List.class);
+        String strList = JSON.toJSONString(customerList, Bill.class.getModifiers());
+        List<Bill> bills = JSON.parseArray(strList, Bill.class);
+        return bills;
     }
 
     public void addBill(Bill bill) {
+
     }
 
     public void updateCustomer(Bill bill) {
@@ -34,10 +34,14 @@ public class BillRequest {
     public void removeBills(List<Integer> ids) {
     }
 
-    public List<Customer> getListByName(String trim) {
-        return  new ArrayList<>();
+    public List<Bill> getListByName(String name) {
+        return new ArrayList<>();
     }
 
     public void exportData() {
+    }
+
+    public List<Bill> getListByYear(String year) {
+        return null;
     }
 }

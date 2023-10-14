@@ -29,7 +29,7 @@ public class BillAddAndUpdateFrame extends JFrame {
         title = "添加客户";
         confirm = "添加";
         this.billFrame = billFrame;
-        setBounds(700, 280, 350, 350);
+        setBounds(700, 280, 400, 450);
         setTitle(title);
         setLayout(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -45,7 +45,7 @@ public class BillAddAndUpdateFrame extends JFrame {
         title = "修改学生";
         confirm = "修改";
         this.billFrame = billFrame;
-        setBounds(700, 280, 350, 350);
+        setBounds(700, 280, 400, 450);
         setTitle(title);
         setLayout(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -56,35 +56,35 @@ public class BillAddAndUpdateFrame extends JFrame {
 
     public void addCom() {
 
-        bidLabel = new JLabel("编号：");
-        bidLabel.setBounds(50, 30, 75, 30);
+        bidLabel = new JLabel("  编号：");
+        bidLabel.setBounds(40, 30, 75, 30);
         bid = new JTextField();
-        bid.setBounds(100, 30, 200, 30);
+        bid.setBounds(110, 30, 200, 30);
 
-        cnameLabel = new JLabel("客户名：");
-        cnameLabel.setBounds(50, 70, 75, 30);
+        cnameLabel = new JLabel(" 客户名：");
+        cnameLabel.setBounds(40, 70, 75, 30);
         cname = new JTextField();
-        cname.setBounds(100, 70, 200, 30);
+        cname.setBounds(110, 70, 200, 30);
 
-        orderTimeLabel = new JLabel("下单时间：");
-        orderTimeLabel.setBounds(50, 110, 75, 30);
+        orderTimeLabel = new JLabel("  下单时间：");
+        orderTimeLabel.setBounds(40, 110, 75, 30);
         orderTime = new JTextField();
-        orderTime.setBounds(100, 110, 200, 30);
+        orderTime.setBounds(110, 110, 200, 30);
 
-        quantityLabel = new JLabel("数量：");
-        quantityLabel.setBounds(50, 150, 75, 30);
+        quantityLabel = new JLabel("  数量：");
+        quantityLabel.setBounds(40, 150, 75, 30);
         quantity = new JTextField();
-        quantity.setBounds(100, 150, 200, 30);
+        quantity.setBounds(110, 150, 200, 30);
 
-        unitPriceLabel = new JLabel("单价：");
-        unitPriceLabel.setBounds(50, 190, 75, 30);
+        unitPriceLabel = new JLabel("  单价：");
+        unitPriceLabel.setBounds(40, 190, 75, 30);
         unitPrice = new JTextField();
-        unitPrice.setBounds(100, 190, 200, 30);
+        unitPrice.setBounds(110, 190, 200, 30);
 
-        totalPriceLabel = new JLabel("总价：");
-        totalPriceLabel.setBounds(50, 230, 75, 30);
+        totalPriceLabel = new JLabel("  总价：");
+        totalPriceLabel.setBounds(40, 230, 75, 30);
         totalPrice = new JTextField();
-        totalPrice.setBounds(100, 230, 200, 30);
+        totalPrice.setBounds(110, 230, 200, 30);
 
 //        createTimeLabel = new JLabel("录入时间：");
 //        createTimeLabel.setBounds(50, 270, 75, 30);
@@ -96,17 +96,17 @@ public class BillAddAndUpdateFrame extends JFrame {
 //        year = new JTextField();
 //        year.setBounds(100, 310, 200, 30);
 
-        noteLabel = new JLabel("备注：");
-        noteLabel.setBounds(50, 350, 75, 30);
+        noteLabel = new JLabel("  备注：");
+        noteLabel.setBounds(40, 270, 75, 30);
         note = new JTextField();
-        note.setBounds(100, 350, 200, 30);
+        note.setBounds(110, 270, 200, 30);
 
 
         add = new JButton(confirm);
-        add.setBounds(100, 240, 75, 30);
+        add.setBounds(110, 320, 75, 30);
 
         reset = new JButton("重置");
-        reset.setBounds(200, 240, 75, 30);
+        reset.setBounds(210, 320, 75, 30);
 
         if (type == 2) {
             bid.setEditable(false);
@@ -155,7 +155,6 @@ public class BillAddAndUpdateFrame extends JFrame {
                     orderTime.getText().trim().substring(0, 4), note.getText().trim());
             System.out.println(bill);
             billRequest.addBill(bill);
-
             billFrame.showData(billRequest.getList());
             dispose();
         } catch (Exception e) {

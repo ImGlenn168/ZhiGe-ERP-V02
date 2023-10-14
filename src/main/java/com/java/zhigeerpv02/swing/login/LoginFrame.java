@@ -91,16 +91,19 @@ public class LoginFrame extends JFrame {
                     System.out.println(inputUser);
                     ResponseEntity<User> loginUser = restTemplate.post(RestTemplateUtil.URL + "/user/login", inputUser, User.class);
                     System.out.println(loginUser);
-
-                    if (loginUser != null && loginUser.getBody().getStatus() != 0) {
-                        JOptionPane.showConfirmDialog(LoginFrame.this,
-                                "登陆成功，欢迎进入!", "登陆成功",
-                                JOptionPane.CLOSED_OPTION);
-                        dispose();
-                        optionFrame = OptionFrame.getOptionFrame();
-                        optionFrame.setVisible(true);
+                    if (loginUser != null) {
+                        if (loginUser.getBody().getStatus() != 0) {
+                            JOptionPane.showConfirmDialog(LoginFrame.this,
+                                    "登陆成功，欢迎进入!", "登陆成功",
+                                    JOptionPane.CLOSED_OPTION);
+                            dispose();
+                            optionFrame = OptionFrame.getOptionFrame();
+                            optionFrame.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "账号或密码错误！");
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "账号或密码错误！");
+                        JOptionPane.showMessageDialog(null, "账号不存在！");
                     }
                 } else {
                     String name = jtfLoginName.getText().trim();
@@ -109,23 +112,23 @@ public class LoginFrame extends JFrame {
                     inputUser.setPassword(pwd);
                     ResponseEntity<User> loginUser = restTemplate.post(RestTemplateUtil.URL + "/user/login", inputUser, User.class);
                     System.out.println(loginUser);
-                    if (loginUser != null && loginUser.getBody().getStatus() != 0) {
+                    if (loginUser != null) {
+                        if (loginUser.getBody().getStatus() != 1) {
+                            JOptionPane.showConfirmDialog(LoginFrame.this,
+                                    "该用户不是管理员!", "登陆失败",
+                                    JOptionPane.CLOSED_OPTION);
+                        } else {
+                            JOptionPane.showConfirmDialog(LoginFrame.this,
+                                    "登陆成功，欢迎进入!", "登陆成功",
+                                    JOptionPane.CLOSED_OPTION);
+                            dispose();
+                            optionFrame = OptionFrame.getOptionFrame();
+                            optionFrame.setVisible(true);
+                        }
+                    } else {
                         JOptionPane.showConfirmDialog(LoginFrame.this,
                                 "该管理员不存在!", "登陆失败",
                                 JOptionPane.CLOSED_OPTION);
-                        dispose();
-                    } else if (loginUser != null && loginUser.getBody().getStatus() == 1) {
-                        JOptionPane.showConfirmDialog(LoginFrame.this,
-                                "登陆成功，欢迎进入!", "登陆成功",
-                                JOptionPane.CLOSED_OPTION);
-                        dispose();
-                        optionFrame = OptionFrame.getOptionFrame();
-                        optionFrame.setVisible(true);
-                    } else {
-                        JOptionPane.showConfirmDialog(LoginFrame.this,
-                                "该用户不是管理员无法登录!", "登陆失败",
-                                JOptionPane.CLOSED_OPTION);
-                        dispose();
                     }
                 }
             }

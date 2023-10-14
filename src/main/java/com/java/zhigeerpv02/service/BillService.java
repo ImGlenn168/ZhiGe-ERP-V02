@@ -16,4 +16,8 @@ public class BillService {
     public List<Bill> findAllBills() {
         return billDao.findAllBills();
     }
+
+    public boolean addBill(Bill bill) {
+        return billDao.addBill(bill)>0;
+    }
 }

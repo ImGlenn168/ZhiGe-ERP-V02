@@ -4,6 +4,8 @@ import com.java.zhigeerpv02.entity.Bill;
 import com.java.zhigeerpv02.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,5 +21,8 @@ public class BillController {
         return billService.findAllBills();
     }
 
-    
+    @PostMapping("/bill/add")
+    public boolean addBill(@RequestBody Bill bill) {
+        return billService.addBill(bill);
+    }
 }

@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTableData {
+public class CustomerTableData {
     public static DefaultTableModel getModel(List<Customer> customers) {
         String[] columnNames = new String[]{"编号", "姓名", "电话", "微信","备注"};
         System.out.println(customers);

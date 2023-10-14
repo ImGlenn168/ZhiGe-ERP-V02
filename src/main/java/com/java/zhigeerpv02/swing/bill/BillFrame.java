@@ -2,10 +2,9 @@ package com.java.zhigeerpv02.swing.bill;
 
 import com.alibaba.excel.util.StringUtils;
 import com.java.zhigeerpv02.entity.Bill;
-import com.java.zhigeerpv02.entity.Customer;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
-import com.java.zhigeerpv02.swing.util.MyTableData;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -24,15 +23,15 @@ public class BillFrame extends JFrame {
     JTable jTable;
     JScrollPane jScrollPane;
     JButton add, del, update, query, export, goBackOption;
-    JTextField nameCheck;
+    JTextField check;
 
     /**
      * 账单列表展示
      */
     public BillFrame() {
         // 载入数据
-        this.setBounds(500, 250, 1200, 500);
-        this.setTitle("客户管理");
+        this.setBounds(380, 130, 1200, 800);
+        this.setTitle("账单管理");
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -45,48 +44,51 @@ public class BillFrame extends JFrame {
         jTable = new JTable();
 
         jScrollPane = new JScrollPane(jTable);
-        jScrollPane.setBounds(2, 2, 790, 300);
+        jScrollPane.setBounds(2, 2, 1185, 600);
 
-        goBackOption = new JButton("返回选择界面");
-        goBackOption.setBounds(50, 320, 120, 25);
+        goBackOption = new JButton("返回");
+        goBackOption.setBounds(50, 630, 80, 25);
 
-        add = new JButton("添加");
-        add.setBounds(50, 410, 80, 25);
+        check = new JTextField();
+        check.setBounds(50, 680, 100, 25);
 
-        update = new JButton("修改");
-        update.setBounds(180, 410, 80, 25);
-
-        del = new JButton("删除");
-        del.setBounds(310, 410, 80, 25);
+        query = new JButton("年份");
+        query.setBounds(310, 630, 80, 25);
 
         query = new JButton("查询");
-        query.setBounds(180, 370, 80, 25);
+        query.setBounds(180, 680, 80, 25);
 
         export = new JButton("导出");
-        export.setBounds(310, 370, 80, 25);
+        export.setBounds(310, 680, 80, 25);
 
-        nameCheck = new JTextField();
-        nameCheck.setBounds(50, 370, 100, 25);
+        add = new JButton("添加");
+        add.setBounds(50, 720, 80, 25);
+
+        update = new JButton("修改");
+        update.setBounds(180, 720, 80, 25);
+
+        del = new JButton("删除");
+        del.setBounds(310, 720, 80, 25);
 
         addListener();
         add(goBackOption);
+        add(query);
+        add(check);
+        add(export);
         add(add);
         add(update);
         add(del);
-        add(query);
-        add(export);
-        add(nameCheck);
         add(jScrollPane);
     }
 
     // 为控件添加事件监听
     public void addListener() {
         backToOptions();
-        addCustomer();
-        delCustomer();
-        queryCustomer();
-        updateCustomer();
-        exportCustomer();
+        addBills();
+        delBills();
+        queryBills();
+        updateBills();
+        exportBills();
         // 关闭窗口时，保存数据到文件
         addWindowListener(new WindowAdapter() {
             @Override
@@ -100,9 +102,9 @@ public class BillFrame extends JFrame {
     }
 
     // 不同的集合展示不同的数据
-    public void showData(List<Customer> data) {
+    public void showData(List<Bill> data) {
         // 设置表格数据模型
-        jTable.setModel(MyTableData.getModel(data));
+        jTable.setModel(BillTableData.getModel(data));
         // 表格数据变化时，修改数据
         jTable.getModel().addTableModelListener(e -> {
             billRequest.updateCustomer(getCurrentBill());
@@ -121,7 +123,7 @@ public class BillFrame extends JFrame {
         });
     }
 
-    public void addCustomer() {
+    public void addBills() {
         add.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -130,7 +132,7 @@ public class BillFrame extends JFrame {
         });
     }
 
-    public void delCustomer() {
+    public void delBills() {
         del.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -146,7 +148,7 @@ public class BillFrame extends JFrame {
         });
     }
 
-    public void updateCustomer() {
+    public void updateBills() {
         update.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -157,14 +159,18 @@ public class BillFrame extends JFrame {
         });
     }
 
-    public void queryCustomer() {
+    public void queryBills() {
         query.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (StringUtils.isBlank(nameCheck.getText().trim())) {
+                if (StringUtils.isBlank(check.getText().trim())) {
                     showData(billRequest.getList());
                 } else {
-                    showData(billRequest.getListByName(nameCheck.getText().trim()));
+                    if (StringUtils.isNumeric(check.getText().trim())) {
+                        showData(billRequest.getListByYear(check.getText().trim()));
+                    } else {
+                        showData(billRequest.getListByName(check.getText().trim()));
+                    }
                 }
             }
         });
@@ -174,7 +180,7 @@ public class BillFrame extends JFrame {
     /**
      * 导出
      */
-    public void exportCustomer() {
+    public void exportBills() {
         export.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
