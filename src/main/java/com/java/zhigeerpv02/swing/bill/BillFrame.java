@@ -4,8 +4,8 @@ import com.alibaba.excel.util.StringUtils;
 import com.java.zhigeerpv02.entity.Bill;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -24,6 +24,7 @@ public class BillFrame extends JFrame {
     JScrollPane jScrollPane;
     JButton add, del, update, query, export, goBackOption;
     JTextField check;
+    JPanel disPlayArea;
 
     /**
      * 账单列表展示
@@ -70,7 +71,16 @@ public class BillFrame extends JFrame {
         del = new JButton("删除");
         del.setBounds(310, 720, 80, 25);
 
+        // TODO 用来展示订单总金额
+        disPlayArea = new JPanel();
+        disPlayArea.setBounds(400, 630, 600, 110);
+        JLabel totalPrice = new JLabel(check+"订单总金额：");
+        totalPrice.setHorizontalAlignment(0);
+        totalPrice.setFont(new Font("楷书",30,30));
+        disPlayArea.add(totalPrice);
+
         addListener();
+        add(disPlayArea);
         add(goBackOption);
         add(query);
         add(check);
