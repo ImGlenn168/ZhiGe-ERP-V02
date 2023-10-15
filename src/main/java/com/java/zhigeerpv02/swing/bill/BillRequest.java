@@ -2,7 +2,9 @@ package com.java.zhigeerpv02.swing.bill;
 
 import com.alibaba.fastjson.JSON;
 import com.java.zhigeerpv02.entity.Bill;
+import com.java.zhigeerpv02.swing.util.MsgFrame;
 import com.java.zhigeerpv02.utils.RestTemplateUtil;
+import com.java.zhigeerpv02.utils.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +20,38 @@ public class BillRequest {
     }
 
     public List<Bill> getList() {
-        List customerList = RestTemplateUtil.getRestTemplate().getForObject(RestTemplateUtil.URL + "/bill/findAll", List.class);
-        String strList = JSON.toJSONString(customerList, Bill.class.getModifiers());
-        List<Bill> bills = JSON.parseArray(strList, Bill.class);
+        Result result = RestTemplateUtil.getRestTemplate().getForObject(RestTemplateUtil.URL + "/bill/findAll", Result.class);
+        List<Bill> bills = new ArrayList<>();
+        if (result.getData() == null) {
+            return bills;
+        }
+        String strList = JSON.toJSONString(result.getData());
+        bills = JSON.parseArray(strList, Bill.class);
         return bills;
     }
 
     public void addBill(Bill bill) {
-
+        Result result = RestTemplateUtil.getRestTemplate().postForObject(RestTemplateUtil.URL + "/bill/addBill", bill, Result.class);
+        if (result.getData() != null) {
+            new MsgFrame(result.getData().toString());
+        }
+        if (result.getCode() > 0) {
+            new MsgFrame("添加成功！");
+        } else {
+            new MsgFrame("添加失败！");
+        }
     }
 
-    public void updateCustomer(Bill bill) {
+    public void updateBill(Bill bill) {
+        Result result = RestTemplateUtil.getRestTemplate().postForObject(RestTemplateUtil.URL + "/bill/updateBill", bill, Result.class);
+        if (result.getData() != null) {
+            new MsgFrame(result.getData().toString());
+        }
+        if (result.getCode() > 0) {
+            new MsgFrame("修改成功！");
+        } else {
+            new MsgFrame("修改失败！");
+        }
     }
 
     public void removeBills(List<Integer> ids) {

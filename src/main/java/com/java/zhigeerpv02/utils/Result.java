@@ -1,9 +1,16 @@
 package com.java.zhigeerpv02.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Result {
+@Data
+@NoArgsConstructor
+public class Result implements Serializable {
 
     private int code;
     private String message;
@@ -12,7 +19,7 @@ public class Result {
     public Result(int code, String message, Object data) {
         this.code = code;
         this.message = message;
-        this.data =  data;
+        this.data = data;
     }
 
     public Result(int code, String message) {
@@ -24,26 +31,27 @@ public class Result {
         this.code = code;
         this.data = data;
     }
+
     public static Result success() {
-        return new Result(200, "success");
+        return new Result(1, "success");
     }
 
-    public static Result success( Object data) {
-        return new Result(200, "success",data);
+    public static Result success(Object data) {
+        return new Result(1, "success", data);
     }
 
-    public static Result result( Object data) {
-        Map<String,Object> result =new HashMap<>();
-        result.put("success",data);
-        return new Result(200,result);
+    public static Result result(Object data) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", data);
+        return new Result(1, result);
     }
 
     public static Result fail() {
-        return new Result(500, "fail");
+        return new Result(-1, "fail");
     }
 
     public static Result fail(Object data) {
-        return new Result(405, "fail",data);
+        return new Result(-1, "fail", data);
     }
 
     public static Result getResult(int i) {

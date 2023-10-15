@@ -107,7 +107,7 @@ public class BillFrame extends JFrame {
         jTable.setModel(BillTableData.getModel(data));
         // 表格数据变化时，修改数据
         jTable.getModel().addTableModelListener(e -> {
-            billRequest.updateCustomer(getCurrentBill());
+            billRequest.updateBill(getCurrentBill());
         });
     }
 

@@ -131,7 +131,7 @@ public class CustomerAddAndUpdateFrame extends JFrame {
         }
     }
 
-    private void updateStudent() {
+    private void updateCustomer() {
         if (!validation()) return;
         customer = new Customer(cid.getText().trim(), cname.getText().trim(),
                 tel.getText().trim(), weChat.getText().trim(), note.getText().trim());
@@ -151,7 +151,7 @@ public class CustomerAddAndUpdateFrame extends JFrame {
                         addCustomer();
                         break;
                     case 2:
-                        updateStudent();
+                        updateCustomer();
                         break;
                 }
             }

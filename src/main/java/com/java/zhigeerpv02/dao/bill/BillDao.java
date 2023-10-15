@@ -15,4 +15,7 @@ public interface BillDao {
 
     @UpdateProvider(value = BillSqlProvider.class, method = "addBill")
     int addBill(Bill bill);
+
+    @UpdateProvider(value = BillSqlProvider.class, method = "updateBill")
+    int updateBill(Bill bill);
 }

@@ -9,7 +9,6 @@ import java.util.List;
 public class BillTableData {
     public static DefaultTableModel getModel(List<Bill> bills) {
         String[] columnNames = new String[]{"编号", "客户名", "下单时间", "数量","单价","总价","录入时间","年份","备注"};
-        System.out.println(bills);
         List<Bill> collect = new ArrayList<>(bills);
         String[][] data = new String[collect.size()][columnNames.length];
         for (int i = 0; i < bills.size(); i++) {

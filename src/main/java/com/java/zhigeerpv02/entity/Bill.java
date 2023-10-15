@@ -27,13 +27,20 @@ public class Bill {
     // 备注
     private String note;
 
-    public Bill(String cname, String orderTime, String quantity, String unitPrice, String totalPrice, String year, String note) {
+    public Bill(String bid, String cname, String orderTime, String quantity, String unitPrice, String note) {
+        this.bid=bid;
         this.cname = cname;
         this.orderTime = orderTime;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
-        this.totalPrice = totalPrice;
-        this.year = year;
+        this.note = note;
+    }
+
+    public Bill(String cname, String orderTime, String quantity, String unitPrice, String note) {
+        this.cname = cname;
+        this.orderTime = orderTime;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
         this.note = note;
     }
 }

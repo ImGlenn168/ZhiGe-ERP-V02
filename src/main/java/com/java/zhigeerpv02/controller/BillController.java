@@ -2,6 +2,7 @@ package com.java.zhigeerpv02.controller;
 
 import com.java.zhigeerpv02.entity.Bill;
 import com.java.zhigeerpv02.service.BillService;
+import com.java.zhigeerpv02.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +18,17 @@ public class BillController {
     private BillService billService;
 
     @GetMapping("/bill/findAll")
-    public List<Bill> findAll() {
-        return billService.findAllBills();
+    public Result findAll() {
+        return Result.success(billService.findAllBills());
     }
 
-    @PostMapping("/bill/add")
-    public boolean addBill(@RequestBody Bill bill) {
+    @PostMapping("/bill/addBill")
+    public Result addBill(@RequestBody Bill bill) {
         return billService.addBill(bill);
+    }
+
+    @PostMapping("/bill/updateBill")
+    public Result updateBill(@RequestBody Bill bill) {
+        return billService.updateBill(bill);
     }
 }

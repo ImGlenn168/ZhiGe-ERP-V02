@@ -25,7 +25,7 @@ public class OptionFrame extends JFrame {
 
     public OptionFrame() throws HeadlessException {
         setTitle("企业管理系统");
-        this.setBounds(580, 380, 350, 350);
+        this.setBounds(680, 340, 350, 350);
         this.setLayout(null);
         this.setDefaultCloseOperation(OptionFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
