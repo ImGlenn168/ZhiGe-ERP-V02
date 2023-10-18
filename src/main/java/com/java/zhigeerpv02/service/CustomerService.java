@@ -116,7 +116,7 @@ public class CustomerService {
             }
         }
         //3、指定需要那个class去写。然后写到第一个sheet，名字为模版，然后文件流会自动关闭
-        EasyExcel.write(excelFile, Customer.class).sheet("订单模版").doWrite(queryToExcel());
+        EasyExcel.write(excelFile, Customer.class).sheet("所有客户").doWrite(queryToExcel());
     }
 
     public List<Customer> queryToExcel() {
@@ -125,8 +125,8 @@ public class CustomerService {
         List<Customer> excels = new ArrayList<>();
         //遍历数据集，导出Excel
         for (int i = 0; i < customers.size(); i++) {
-            Customer customer = customers.get(i);
             Customer data = new Customer();
+            Customer customer = customers.get(i);
             data.setCid(customer.getCid());
             data.setCname(customer.getCname());
             data.setPhoneNumber(customer.getPhoneNumber());

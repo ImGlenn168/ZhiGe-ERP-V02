@@ -5,9 +5,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class RestTemplateUtil {
@@ -20,6 +22,8 @@ public class RestTemplateUtil {
         if (restTemplate == null) {
             restTemplate = new RestTemplate();
         }
+        // 设置请求编码，解决post请求中文乱码问题
+        restTemplate.getMessageConverters().set(1,new StringHttpMessageConverter(StandardCharsets.UTF_8));
         return restTemplate;
     }
 

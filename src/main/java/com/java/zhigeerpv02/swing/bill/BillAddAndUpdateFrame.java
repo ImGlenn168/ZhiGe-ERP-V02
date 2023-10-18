@@ -17,7 +17,7 @@ public class BillAddAndUpdateFrame extends JFrame {
     private Bill bill;
     private int type;
 
-    private String[] cnames = {"aaa", "bbb", "ccc"};
+    public static String[] CNAMES = {"宏福", "赛锐", "中流", "能通", "明正", "修兵", "修明", "何玺", "陈杰", "阿刚", "夏传荣", "松子"};
 
     JTextField bid, orderTime, quantity, unitPrice, totalPrice, createTime, year;
     JButton add, reset;
@@ -70,7 +70,7 @@ public class BillAddAndUpdateFrame extends JFrame {
 
         cnameLabel = new JLabel(" 客户名：");
         cnameLabel.setBounds(40, 70, 75, 30);
-        cname = new JComboBox(cnames);
+        cname = new JComboBox(CNAMES);
         cname.setBounds(110, 70, 200, 30);
 
         orderTimeLabel = new JLabel("  下单时间：");

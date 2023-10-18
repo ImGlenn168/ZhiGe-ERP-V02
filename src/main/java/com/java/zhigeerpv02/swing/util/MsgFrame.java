@@ -29,4 +29,6 @@ public class MsgFrame extends JFrame {
         this.add(jLabel);
         this.setVisible(true);
     }
+
+
 }

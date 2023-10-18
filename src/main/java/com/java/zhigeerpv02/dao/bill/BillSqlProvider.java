@@ -4,10 +4,17 @@ package com.java.zhigeerpv02.dao.bill;
 import com.java.zhigeerpv02.entity.Bill;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class BillSqlProvider {
 
     private String sql;
+
+    public String removeBills(int id) {
+        sql = "delete from bill where bid = '" + id + "'";
+        return sql;
+    }
 
     public String addBill(Bill bill) {
         StringBuffer sql1 = new StringBuffer();
@@ -70,4 +77,6 @@ public class BillSqlProvider {
         sql1.append(" where bid = '" + bill.getBid() + "' ;");
         return sql1.toString();
     }
+
+
 }

@@ -4,7 +4,9 @@ import com.alibaba.excel.util.StringUtils;
 import com.java.zhigeerpv02.entity.Bill;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,12 +21,18 @@ public class BillFrame extends JFrame {
 
     private BillFrame billFrame = this;
 
+    private List<Bill> billList;
+
     private OptionFrame optionFrame;
     JTable jTable;
     JScrollPane jScrollPane;
-    JButton add, del, update, query, export, goBackOption;
+    JButton add, del, update, query, orderTimeQuery, export, goBackOption;
     JTextField check;
     JPanel disPlayArea;
+
+    private String totalPrice;
+
+    JLabel totalPriceLabel = new JLabel();
 
     /**
      * 账单列表展示
@@ -38,6 +46,7 @@ public class BillFrame extends JFrame {
         this.setResizable(false);
         this.addController();
         this.showData(billRequest.getList());
+        this.showTotalPrice(queryTotalPrice());
         this.setVisible(true);
     }
 
@@ -50,11 +59,11 @@ public class BillFrame extends JFrame {
         goBackOption = new JButton("返回");
         goBackOption.setBounds(50, 630, 80, 25);
 
+        orderTimeQuery = new JButton("下单区间查询");
+        orderTimeQuery.setBounds(180, 630, 140, 25);
+
         check = new JTextField();
         check.setBounds(50, 680, 100, 25);
-
-        query = new JButton("年份");
-        query.setBounds(310, 630, 80, 25);
 
         query = new JButton("查询");
         query.setBounds(180, 680, 80, 25);
@@ -71,17 +80,17 @@ public class BillFrame extends JFrame {
         del = new JButton("删除");
         del.setBounds(310, 720, 80, 25);
 
-        // TODO 用来展示订单总金额
         disPlayArea = new JPanel();
-        disPlayArea.setBounds(400, 630, 600, 110);
-        JLabel totalPrice = new JLabel(check+"订单总金额：");
-        totalPrice.setHorizontalAlignment(0);
-        totalPrice.setFont(new Font("楷书",30,30));
-        disPlayArea.add(totalPrice);
+        disPlayArea.setBounds(450, 650, 700, 50);
+        disPlayArea.setBackground(Color.GREEN);
+        Border blackline = BorderFactory.createLineBorder(Color.RED);
+        disPlayArea.setBorder(blackline);
+
 
         addListener();
         add(disPlayArea);
         add(goBackOption);
+        add(orderTimeQuery);
         add(query);
         add(check);
         add(export);
@@ -94,11 +103,13 @@ public class BillFrame extends JFrame {
     // 为控件添加事件监听
     public void addListener() {
         backToOptions();
+        orderTimeCheck();
         addBills();
         delBills();
         queryBills();
         updateBills();
         exportBills();
+        queryTotalPrice();
         // 关闭窗口时，保存数据到文件
         addWindowListener(new WindowAdapter() {
             @Override
@@ -111,14 +122,31 @@ public class BillFrame extends JFrame {
         });
     }
 
+    private void orderTimeCheck() {
+        orderTimeQuery.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new TimeQueryFrame(billFrame, BillAddAndUpdateFrame.CNAMES);
+            }
+        });
+    }
+
     // 不同的集合展示不同的数据
-    public void showData(List<Bill> data) {
+    public void showData(List<Bill> billList) {
         // 设置表格数据模型
-        jTable.setModel(BillTableData.getModel(data));
+        jTable.setModel(BillTableData.getModel(billList));
         // 表格数据变化时，修改数据
         jTable.getModel().addTableModelListener(e -> {
             billRequest.updateBill(getCurrentBill());
         });
+    }
+
+    // 展示总价
+    public void showTotalPrice(String tp) {
+        totalPriceLabel.setText(tp);
+        totalPriceLabel.setHorizontalAlignment(0);
+        totalPriceLabel.setFont(new Font("楷书", 20, 30));
+        disPlayArea.add(totalPriceLabel);
     }
 
 
@@ -169,17 +197,51 @@ public class BillFrame extends JFrame {
         });
     }
 
+    /**
+     * 查询金额
+     *
+     * @return
+     */
+    public String queryTotalPrice() {
+        query.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (StringUtils.isBlank(check.getText().trim())) {
+                    totalPrice = billRequest.getTotalPrice();
+                    showTotalPrice("所有的账单金额：" + totalPrice);
+                } else {
+                    if (StringUtils.isNumeric(check.getText().trim())) {
+                        totalPrice = billRequest.getTotalPriceByYear(check.getText().trim());
+                        showTotalPrice(check.getText().trim() + "年的账单金额：" + totalPrice);
+                    } else {
+                        totalPrice = billRequest.getTotalPriceByName(check.getText().trim());
+                        showTotalPrice(check.getText().trim() + "的账单金额：" + totalPrice);
+                    }
+                }
+            }
+        });
+        return totalPrice;
+    }
+
+    /**
+     * 查询按钮
+     */
     public void queryBills() {
         query.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (StringUtils.isBlank(check.getText().trim())) {
-                    showData(billRequest.getList());
+                    billList = billRequest.getList();
+                    showData(billList);
                 } else {
                     if (StringUtils.isNumeric(check.getText().trim())) {
-                        showData(billRequest.getListByYear(check.getText().trim()));
+                        System.out.println(check.getText().trim() + " year");
+                        billList = billRequest.getListByYear(check.getText().trim());
+                        showData(billList);
                     } else {
-                        showData(billRequest.getListByName(check.getText().trim()));
+                        System.out.println(check.getText().trim() + " name");
+                        billList = billRequest.getListByName(check.getText().trim());
+                        showData(billList);
                     }
                 }
             }
