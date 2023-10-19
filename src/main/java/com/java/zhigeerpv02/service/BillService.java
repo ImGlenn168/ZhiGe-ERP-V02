@@ -14,11 +14,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class BillService {
 
-    private String[] names = {"宏福", "赛锐", "中流", "能通", "明正", "修兵", "修明", "何玺", "陈杰", "阿刚", "夏传荣", "松子"};
     @Autowired
     private BillDao billDao;
 
@@ -176,16 +177,18 @@ public class BillService {
         List<Bill> dataExcels = new ArrayList<>();
         writeSheet = EasyExcel.writerSheet(0, "所有账单").build();
         excelWriter.write(queryToExcel(bills, dataExcels), writeSheet);
-        for (int i = 0; i < names.length; i++) {
-            List<Bill> cdataExcel = new ArrayList<>();
-            for (Bill bill : bills) {
-                if (names[i].equals(bill.getCname())) {
-                    getBillData(bills, cdataExcel, i);
-                }
+
+        Map<String, List<Bill>> billMap = bills.stream().collect(Collectors.groupingBy(Bill::getCname));
+        int i = 0;
+        for (Map.Entry<String, List<Bill>> billEntry : billMap.entrySet()) {
+            List<Bill> billList = billEntry.getValue();
+            String name = billEntry.getKey();
+            if (billList.size() > 0) {
+                writeSheet = EasyExcel.writerSheet(i = i + 1, name + "账单").build();
+                excelWriter.write(billList, writeSheet);
             }
-            writeSheet = EasyExcel.writerSheet(i + 1, names[i] + "账单").build();
-            excelWriter.write(cdataExcel, writeSheet);
         }
+
         excelWriter.finish();
     }
 
@@ -197,7 +200,7 @@ public class BillService {
         return dataExcels;
     }
 
-    private void getBillData(List<Bill> bills, List<Bill> cdataExcel, int i) {
+    private List<Bill> getBillData(List<Bill> bills, List<Bill> cdataExcel, int i) {
         Bill data = new Bill();
         Bill bill = bills.get(i);
         data.setBid(bill.getBid());
@@ -210,5 +213,29 @@ public class BillService {
         data.setYear(bill.getYear());
         data.setNote(bill.getNote());
         cdataExcel.add(data);
+        return cdataExcel;
+    }
+
+    public void exportByOrderTimeAndName(String startDay, String endDay, String name) {
+        String FilePath = startDay + "-" + endDay + name + "的账单信息";
+        //1、创建一个文件对象
+        File excelFile = new File("D:/" + FilePath + ".xlsx");
+        //2、判断文件是否存在，不存在则创建一个Excel文件
+        if (!excelFile.exists()) {
+            try {
+                excelFile.createNewFile();//创建一个新的文件
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //3、指定需要那个class去写。然后写到第一个sheet，名字为模版，然后文件流会自动关闭
+        ExcelWriter excelWriter = EasyExcel.write(excelFile, Bill.class).build();
+
+        // 4. 业务代码,获取数据集
+        List<Bill> bills = billDao.getBillsByOrderTimeAndName(startDay, endDay, name);
+        List<Bill> dataExcels = new ArrayList<>();
+        WriteSheet writeSheet = EasyExcel.writerSheet(0, name + "账单").build();
+        excelWriter.write(queryToExcel(bills, dataExcels), writeSheet);
+        excelWriter.finish();
     }
 }

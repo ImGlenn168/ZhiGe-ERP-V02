@@ -1,4 +1,4 @@
-package com.java.zhigeerpv02.swing.customer;
+package com.java.zhigeerpv02.swing.request;
 
 import com.alibaba.fastjson.JSON;
 import com.java.zhigeerpv02.entity.Customer;

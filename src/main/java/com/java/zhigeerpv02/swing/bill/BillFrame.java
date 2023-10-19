@@ -2,9 +2,9 @@ package com.java.zhigeerpv02.swing.bill;
 
 import com.alibaba.excel.util.StringUtils;
 import com.java.zhigeerpv02.entity.Bill;
+import com.java.zhigeerpv02.swing.request.BillRequest;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -126,7 +126,7 @@ public class BillFrame extends JFrame {
         orderTimeQuery.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new TimeQueryFrame(billFrame, BillAddAndUpdateFrame.CNAMES);
+                new BillTimeQueryFrame(billFrame, BillAddAndUpdateFrame.CNAMES);
             }
         });
     }

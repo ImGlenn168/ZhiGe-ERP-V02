@@ -1,6 +1,7 @@
 package com.java.zhigeerpv02.swing.customer;
 
 import com.java.zhigeerpv02.entity.Customer;
+import com.java.zhigeerpv02.swing.request.CustomerRequest;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import org.apache.commons.lang3.StringUtils;
 

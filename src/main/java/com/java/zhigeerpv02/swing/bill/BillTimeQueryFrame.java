@@ -1,6 +1,7 @@
 package com.java.zhigeerpv02.swing.bill;
 
 import com.java.zhigeerpv02.entity.Bill;
+import com.java.zhigeerpv02.swing.request.BillRequest;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 
 import javax.swing.*;
@@ -9,20 +10,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class TimeQueryFrame extends JFrame {
+public class BillTimeQueryFrame extends JFrame {
     private BillRequest billRequest = BillRequest.getBillRequest();
 
     private BillFrame billFrame;
     JLabel startDayLabel, endDayLabel, cname;
     JTextField startDayField, endDayField;
     JComboBox cnameBox;
-    JButton confirm, cancel;
+    JButton confirm, cancel, export;
     String startDay, endDay, name;
 
-    public TimeQueryFrame(BillFrame billFrame, String[] names) throws HeadlessException {
+    public BillTimeQueryFrame(BillFrame billFrame, String[] names) throws HeadlessException {
         this.billFrame = billFrame;
         setTitle("根据下单时间查询");
-        this.setBounds(580, 380, 400, 300);
+        this.setBounds(580, 380, 400, 350);
         this.setLayout(null);
         this.setDefaultCloseOperation(MsgFrame.DISPOSE_ON_CLOSE);
         this.setResizable(false);
@@ -51,6 +52,10 @@ public class TimeQueryFrame extends JFrame {
 
         cancel = new JButton("取消");
         cancel.setBounds(250, 210, 100, 30);
+
+        export = new JButton("导出查询结果");
+        export.setBounds(120, 260, 120, 30);
+
         addListener(billFrame);
         this.add(startDayLabel);
         this.add(startDayField);
@@ -60,11 +65,22 @@ public class TimeQueryFrame extends JFrame {
         this.add(cnameBox);
         this.add(confirm);
         this.add(cancel);
+        this.add(export);
     }
 
     public void addListener(BillFrame billFrame) {
         confirmed(billFrame);
         canceled();
+        exportBillsByOrderTimeAndName();
+    }
+
+    private void exportBillsByOrderTimeAndName() {
+        export.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                billRequest.exportBillsByOrderTimeAndName(startDayField.getText().trim(), endDayField.getText().trim(), cnameBox.getSelectedItem().toString());
+            }
+        });
     }
 
     public void confirmed(BillFrame billFrame) {
@@ -74,7 +90,6 @@ public class TimeQueryFrame extends JFrame {
                 List<Bill> bills = doQuery();
                 billFrame.showData(bills);
                 billFrame.showTotalPrice(startDay + "至" + endDay + name + "的账单金额: " + getTotalPrice(bills));
-                dispose();
             }
         });
     }

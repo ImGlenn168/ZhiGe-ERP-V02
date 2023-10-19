@@ -1,6 +1,7 @@
 package com.java.zhigeerpv02.swing.bill;
 
 import com.java.zhigeerpv02.entity.Bill;
+import com.java.zhigeerpv02.swing.request.BillRequest;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
@@ -160,11 +161,11 @@ public class BillAddAndUpdateFrame extends JFrame {
         try {
             bill = new Bill(
 //                    bid.getText().trim(),
-                    cname.getSelectedItem().toString().trim(), "20" + orderTime.getText().trim(),
+                    cname.getSelectedItem().toString().trim(), orderTime.getText().trim(),
                     quantity.getText().trim(), unitPrice.getText().trim(), Optional.of(note.getText().trim()).orElse(""));
             billRequest.addBill(bill);
             billFrame.showData(billRequest.getList());
-            dispose();
+//            dispose();
         } catch (Exception e) {
             e.printStackTrace();
             new MsgFrame("添加客户发生异常！");
@@ -212,8 +213,8 @@ public class BillAddAndUpdateFrame extends JFrame {
                 quantity.setText("");
                 unitPrice.setText("");
 //                totalPrice.setText("");
-                createTime.setText("");
-                year.setText("");
+//                createTime.setText("");
+//                year.setText("");
                 note.setText("");
             }
         });

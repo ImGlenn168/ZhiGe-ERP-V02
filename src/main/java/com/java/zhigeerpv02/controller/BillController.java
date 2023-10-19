@@ -71,5 +71,10 @@ public class BillController {
         return billService.getBillsByOrderTimeAndName(startDay, endDay, name);
     }
 
-
+    @GetMapping("/bill/exportByOrderTimeAndName")
+    public void exportByOrderTimeAndName(@RequestParam(value = "startDay") String startDay,
+                                         @RequestParam(value = "endDay") String endDay,
+                                         @RequestParam(value = "name") String name) {
+        billService.exportByOrderTimeAndName(startDay, endDay, name);
+    }
 }

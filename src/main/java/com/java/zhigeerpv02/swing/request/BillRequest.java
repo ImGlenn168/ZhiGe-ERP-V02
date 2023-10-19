@@ -1,4 +1,4 @@
-package com.java.zhigeerpv02.swing.bill;
+package com.java.zhigeerpv02.swing.request;
 
 import com.alibaba.fastjson.JSON;
 import com.java.zhigeerpv02.entity.Bill;
@@ -135,5 +135,11 @@ public class BillRequest {
         String strList = JSON.toJSONString(result.getData());
         bills = JSON.parseArray(strList, Bill.class);
         return bills;
+    }
+
+    public void exportBillsByOrderTimeAndName(String startDay, String endDay, String name) {
+        RestTemplateUtil.getRestTemplate()
+                .getForEntity(RestTemplateUtil.URL + "/bill/exportByOrderTimeAndName?startDay=" + startDay + "&endDay=" + endDay + "&name=" + name, Void.class);
+        new MsgFrame("文件已存入D:/" + startDay + "-" + endDay + name + "账单信息.xlsx");
     }
 }

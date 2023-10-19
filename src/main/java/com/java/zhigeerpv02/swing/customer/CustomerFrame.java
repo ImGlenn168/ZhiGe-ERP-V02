@@ -2,6 +2,7 @@ package com.java.zhigeerpv02.swing.customer;
 
 import com.alibaba.excel.util.StringUtils;
 import com.java.zhigeerpv02.entity.Customer;
+import com.java.zhigeerpv02.swing.request.CustomerRequest;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import com.java.zhigeerpv02.swing.util.CustomerTableData;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
