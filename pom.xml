@@ -85,6 +85,12 @@
             <version>3.1</version>
         </dependency>
 
+        <!--        易于阅读、简洁、现代和一致的设计UI美化包-->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>1.6.1</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -5,8 +5,10 @@ import com.java.zhigeerpv02.entity.Bill;
 import com.java.zhigeerpv02.swing.request.BillRequest;
 import com.java.zhigeerpv02.swing.util.MsgFrame;
 import com.java.zhigeerpv02.swing.util.OptionFrame;
+
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -52,6 +54,8 @@ public class BillFrame extends JFrame {
 
     public void addController() {
         jTable = new JTable();
+        jTable.setShowGrid(true);
+        jTable.setGridColor(Color.lightGray);
 
         jScrollPane = new JScrollPane(jTable);
         jScrollPane.setBounds(2, 2, 1185, 600);
@@ -133,8 +137,19 @@ public class BillFrame extends JFrame {
 
     // 不同的集合展示不同的数据
     public void showData(List<Bill> billList) {
+
+        // 居中显示数据
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
         // 设置表格数据模型
         jTable.setModel(BillTableData.getModel(billList));
+
+        // 设置居中显示渲染器
+        for (int i = 0; i < jTable.getColumnCount(); i++) {
+            jTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
         // 表格数据变化时，修改数据
         jTable.getModel().addTableModelListener(e -> {
             billRequest.updateBill(getCurrentBill());

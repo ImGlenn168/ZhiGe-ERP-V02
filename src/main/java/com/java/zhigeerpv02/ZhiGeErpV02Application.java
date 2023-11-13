@@ -1,12 +1,12 @@
 package com.java.zhigeerpv02;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.java.zhigeerpv02.swing.login.LoginFrame;
-import com.java.zhigeerpv02.swing.util.MsgFrame;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.swing.*;
@@ -17,9 +17,11 @@ import javax.swing.*;
 public class ZhiGeErpV02Application {
 
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                FlatLightLaf.install();
                 new LoginFrame().setVisible(true);
             }
         });
